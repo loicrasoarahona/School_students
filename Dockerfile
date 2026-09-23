@@ -23,6 +23,7 @@ WORKDIR /app
 
 # Environnement de production
 ENV NODE_ENV=production
+ENV PORT=3004
 
 # Copier les fichiers de dépendances
 COPY package*.json ./
@@ -34,7 +35,7 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/dist ./dist
 
 # Port utilisé par Express
-EXPOSE 3000
+EXPOSE 3004
 
 # Lancer l'application
 CMD ["node", "dist/app.js"]

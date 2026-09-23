@@ -1,10 +1,10 @@
 import { DataTypes, Model } from "sequelize";
-import { AuthorAttributes } from "../types/interfaces.js";
+import { ClassLevelAttributes } from "../types/interfaces.js";
 import sequelize from "../config/database.js";
 
-export class Author extends Model<AuthorAttributes> {}
+export class ClassLevel extends Model<ClassLevelAttributes> {}
 
-Author.init(
+ClassLevel.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -18,5 +18,5 @@ Author.init(
       field: "name",
     },
   },
-  { sequelize, tableName: "author", modelName: "Author" },
+  { sequelize, tableName: "class_level", modelName: "ClassLevel" },
 );

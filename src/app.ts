@@ -3,7 +3,7 @@ import cors from "cors";
 import { initDB, insertInitialData } from "./config/init.js";
 import "./config/env.js";
 import { setupRelations } from "./models/setupRelations.js";
-import BookRoute from "./routes/author.route.js";
+import StudentRoute from "./routes/student.route.js";
 
 async function main() {
   try {
@@ -26,7 +26,7 @@ async function main() {
       res.send("Hello, world !!");
     });
 
-    app.use("/books", BookRoute);
+    app.use("/students", StudentRoute);
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);

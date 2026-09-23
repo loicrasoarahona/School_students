@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import "./env.js";
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME ?? "loic_database",
+  process.env.DB_NAME ?? "school_students",
   process.env.DB_USER ?? "postgres",
   process.env.DB_PASSWORD ?? "",
   {

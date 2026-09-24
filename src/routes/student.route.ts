@@ -3,6 +3,7 @@ import { Op, WhereOptions } from "sequelize";
 import { Student } from "../models/student.model.js";
 import { ClassLevel } from "../models/class_level.model.js";
 import { Parent } from "../models/parent.model.js";
+import { findStudentById } from "../controllers/student.controller.js";
 
 const router = Router();
 
@@ -40,5 +41,7 @@ router.get("/", async (req, res) => {
 
   return res.json(students);
 });
+
+router.get("/:id", findStudentById);
 
 export default router;

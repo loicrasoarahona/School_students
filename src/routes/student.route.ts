@@ -4,6 +4,7 @@ import { Student } from "../models/student.model.js";
 import { ClassLevel } from "../models/class_level.model.js";
 import { Parent } from "../models/parent.model.js";
 import { findStudentById } from "../controllers/student.controller.js";
+import { ParentRepository } from "../repositories/parent.repository.js";
 
 const router = Router();
 
@@ -43,5 +44,12 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", findStudentById);
+
+router.get("/:id/parents", async (req, res) => {
+  const id = req.params.id;
+  if (typeof id != "string") throw "invalid format of id";
+  const retour = await ParentRepository.findByStudent(parseInt(id));
+  res.json(retour);
+});
 
 export default router;

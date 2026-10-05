@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { initDB, insertInitialData } from "./config/init.js";
 import "./config/env.js";
@@ -29,6 +29,13 @@ async function main() {
 
     app.use("/students", StudentRoute);
     app.use("/class-levels", classLevelRoute);
+
+    // gestion d'erreurs http
+    app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+      console.error(err);
+
+      return res.status(500).json({ error: "Une erreur s'est produite" });
+    });
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);

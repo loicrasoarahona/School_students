@@ -5,6 +5,7 @@ import { ClassLevel } from "../models/class_level.model.js";
 import { Parent } from "../models/parent.model.js";
 import { findStudentById } from "../controllers/student.controller.js";
 import { ParentRepository } from "../repositories/parent.repository.js";
+import { StudentRepository } from "../repositories/student.repository.js";
 
 const router = Router();
 
@@ -41,6 +42,42 @@ router.get("/", async (req, res) => {
   });
 
   return res.json(students);
+});
+
+router.get("/paginated", async (req, res) => {
+  const { class_level, name, page, limit } = req.query;
+
+  let classLevelId: number | undefined;
+  if (class_level !== undefined) {
+    classLevelId = Number(class_level);
+    if (Number.isNaN(classLevelId)) {
+      return res
+        .status(400)
+        .json({ message: "class_level doit être un nombre" });
+    }
+  }
+
+  const pageNumber = page !== undefined ? Number(page) : 1;
+  const limitNumber = limit !== undefined ? Number(limit) : 10;
+
+  if (Number.isNaN(pageNumber) || pageNumber < 1) {
+    return res.status(400).json({ message: "page doit être un nombre >= 1" });
+  }
+
+  if (Number.isNaN(limitNumber) || limitNumber < 1) {
+    return res
+      .status(400)
+      .json({ message: "limit doit être un nombre >= 1" });
+  }
+
+  const result = await StudentRepository.findAll({
+    page: pageNumber,
+    limit: limitNumber,
+    classLevelId,
+    name: typeof name === "string" && name.trim() !== "" ? name : undefined,
+  });
+
+  return res.json(result);
 });
 
 router.get("/:id", findStudentById);
